@@ -12,6 +12,6 @@ SelfMonitor
   support multiple users;  
   different user data should be stored seperately;  
 * 3rd week  
-  provide history function, can check the history of all items;
+  provide history function, can check the history of all items;  
   provide statistic for items
   
