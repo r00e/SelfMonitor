@@ -12,9 +12,9 @@ namespace ProductStore.Models
         {
             var products = new List<Product>()            
             {
-                new Product() { Name = "ShuXue", PageCount = 100, ActualCost = .99M },
-                new Product() { Name = "YuWen", PageCount = 150, ActualCost = 10 },
-                new Product() { Name = "ZhengZhi", PageCount = 200, ActualCost = 2.05M }
+                new Product() { Name = "ShuXue", PageCount = 100},
+                new Product() { Name = "YuWen", PageCount = 150},
+                new Product() { Name = "ZhengZhi", PageCount = 200}
             };
 
             products.ForEach(p => context.Products.Add(p));

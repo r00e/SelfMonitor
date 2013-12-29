@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ProductStore.Models
 {
-    using System.ComponentModel.DataAnnotations;
 
     public class Product
     {
@@ -14,14 +10,6 @@ namespace ProductStore.Models
         [Required]
         public string Name { get; set; }
         public decimal PageCount { get; set; }
-        public decimal ActualCost { get; set; }
+//        public decimal ActualCost { get; set; }
     }
-}
-
-namespace ProductStore.Models
-{
-}
-
-namespace ProductStore.Models
-{
 }
