@@ -10,6 +10,5 @@ namespace ProductStore.Models
         [Required]
         public string Name { get; set; }
         public decimal PageCount { get; set; }
-//        public decimal ActualCost { get; set; }
     }
 }
