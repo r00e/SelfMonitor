@@ -9,7 +9,10 @@ namespace Homework.App
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteTable.Routes.MapMvcAttributeRoutes();
+            RouteTable.Routes.MapRoute(
+                "Default",
+                "{controller}/{action}/{id}",
+                new {Controller = "Home", Action = "Index", Id = UrlParameter.Optional});
         }
     }
 }
