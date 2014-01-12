@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using Homework.App.Models;
 
 namespace Homework.App.Controllers
 {
@@ -9,9 +11,9 @@ namespace Homework.App.Controllers
         public ActionResult Index()
         {
             CreateDbFile();
-            AddNewRecord("HK","Eng","10");
-            GetAllRecords();
-            return View();
+//            AddNewRecord("HK","Eng","10");
+//            AddNewRecord("YR","Chinese","15");
+            return View(GetAllRecords());
         }
 
         private static void CreateDbFile()
@@ -39,7 +41,7 @@ namespace Homework.App.Controllers
             }
         }
 
-        private static void AddNewRecord(string name, string book, string page)
+        public ActionResult AddNewRecord(string name, string book, string page)
         {
             using (var con = new System.Data.SQLite.SQLiteConnection("data source=HomeworkDB.db3"))
             {
@@ -52,14 +54,16 @@ namespace Homework.App.Controllers
                                                           "values ('{0}','{1}', '{2}', '{3}')", name, book, page, dateTemp);
                     com.CommandText = addRecordQuery;
                     com.ExecuteNonQuery();
-
-                    con.Close();
                 }
             }
+
+            return RedirectToAction("Index");
         }
 
-        private static void GetAllRecords()
+        private List<Record> GetAllRecords()
         {
+            var records = new List<Record>();
+
             using (var con = new System.Data.SQLite.SQLiteConnection("data source=HomeworkDB.db3"))
             {
                 using (var com = new System.Data.SQLite.SQLiteCommand(con))
@@ -71,16 +75,19 @@ namespace Homework.App.Controllers
                     {
                         while (reader.Read())
                         {
-                            var name1 = reader["Name"];
-                            var book1 = reader["Book"];
-                            var page1 = reader["Page"];
-                            var date1 = (DateTime)reader["Date"];
+                            records.Add(new Record());
+                            records.Last().Name = (string) reader["Name"];
+                            records.Last().Book = (string) reader["Book"];
+                            records.Last().Page = (string) reader["Page"];
+                            records.Last().Date = (DateTime)reader["Date"];
                         }
                     }
 
                     con.Close();
                 }
             }
+
+            return records;
         }
     }
 }

@@ -1,22 +1,93 @@
-﻿@inherits System.Web.Mvc.WebViewPage
+﻿@using System.Web.Mvc.Html
+@inherits System.Web.Mvc.WebViewPage<IEnumerable<Homework.App.Models.Record>>
 
-@{
-    Layout = null;
-}
+    @{
+        Layout = null;
+    }
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 
-<html>
-<head>
-    <title>Index</title>
-</head>
+    <html>
+    <head>
+        <title>Index</title>
+    </head>
     <body>
-        <label>Name</label>
-        <input/>
-        <label>Book</label>
-        <input/>
-        <label>Page</label>
-        <input/>
-        <button>Add</button>
+        <style type="text/css">
+            table {
+                font-family: verdana,arial,sans-serif;
+                font-size: 11px;
+                color: #333333;
+                border-width: 1px;
+                border-color: #666666;
+                border-collapse: collapse;
+            }
+
+                table th {
+                    border-width: 1px;
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #D0D0D0;
+                }
+
+                table td {
+                    border-width: 1px;
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                }
+
+                table tr {
+                    border: 0;
+                    border-top: 1px solid #CCC;
+                    background-color: white;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                    table tr:nth-child(2n+1) {
+                        background-color: #F0F0F0;
+                    }
+        </style>
+        
+        <form method="POST" action="/home/AddNewRecord">
+            <label>Name</label>
+            <input name="name"/>
+            <label>Book</label>
+            <input name="book"/>
+            <label>Page</label>
+            <input name="page"/>
+            <button id="add-record">Add</button>
+        </form>
+
+        <div>
+            <table>
+                <tr>
+                    <th>@Html.LabelFor(model => model.FirstOrDefault().Name)</th>
+                    <th>@Html.LabelFor(model => model.FirstOrDefault().Book)</th>
+                    <th>@Html.LabelFor(model => model.FirstOrDefault().Page)</th>
+                    <th>@Html.LabelFor(model => model.FirstOrDefault().Date)</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Book</td>
+                        <td>@item.Page</td>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </table>
+        </div>
+            
+@*        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>*@
+@*        <script>*@
+@*            $('#add-record').click(function () {*@
+@**@
+@*                });*@
+@*            });*@
+@*        </script>*@
+
     </body>
 </html>
