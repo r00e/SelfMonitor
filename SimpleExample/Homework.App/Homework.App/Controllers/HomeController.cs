@@ -82,8 +82,6 @@ namespace Homework.App.Controllers
                             records.Last().Date = (DateTime)reader["Date"];
                         }
                     }
-
-                    con.Close();
                 }
             }
 
