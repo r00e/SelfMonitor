@@ -11,36 +11,8 @@ namespace Homework.App.Controllers
     {
         public ActionResult Index()
         {
-//            CreateDbFile();
-//            AddNewRecord("HK","Eng","10");
-//            AddNewRecord("YR","Chinese","15");
             return View(GetAllRecords());
         }
-
-//        private static void CreateDbFile()
-//        {
-//            if(System.IO.File.Exists("HomeworkDB.db3")) return;
-//
-//            const string createTableQuery = @"CREATE TABLE IF NOT EXISTS [data] (
-//                                  [Name] VARCHAR(50),
-//                                  [Book] VARCHAR(1000),
-//                                  [Page] VARCHAR(1000),
-//                                  [Date] DATE
-//                                  )";
-//            System.Data.SQLite.SQLiteConnection.CreateFile("HomeworkDB.db3");
-//            using (var con = new System.Data.SQLite.SQLiteConnection("data source=HomeworkDB.db3"))
-//            {
-//                using (var com = new System.Data.SQLite.SQLiteCommand(con))
-//                {
-//                    con.Open();
-//
-//                    com.CommandText = createTableQuery;
-//                    com.ExecuteNonQuery();
-//
-//                    con.Close();
-//                }
-//            }
-//        }
 
         public ActionResult AddNewRecord(string name, string book, string page)
         {
