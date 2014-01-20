@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using Homework.App.Models;
@@ -10,51 +13,50 @@ namespace Homework.App.Controllers
     {
         public ActionResult Index()
         {
-            CreateDbFile();
+//            CreateDbFile();
 //            AddNewRecord("HK","Eng","10");
 //            AddNewRecord("YR","Chinese","15");
             return View(GetAllRecords());
         }
 
-        private static void CreateDbFile()
-        {
-            if(System.IO.File.Exists("HomeworkDB.db3")) return;
-
-            const string createTableQuery = @"CREATE TABLE IF NOT EXISTS [data] (
-                                  [Name] VARCHAR(50),
-                                  [Book] VARCHAR(1000),
-                                  [Page] VARCHAR(1000),
-                                  [Date] DATE
-                                  )";
-            System.Data.SQLite.SQLiteConnection.CreateFile("HomeworkDB.db3");
-            using (var con = new System.Data.SQLite.SQLiteConnection("data source=HomeworkDB.db3"))
-            {
-                using (var com = new System.Data.SQLite.SQLiteCommand(con))
-                {
-                    con.Open();
-
-                    com.CommandText = createTableQuery;
-                    com.ExecuteNonQuery();
-
-                    con.Close();
-                }
-            }
-        }
+//        private static void CreateDbFile()
+//        {
+//            if(System.IO.File.Exists("HomeworkDB.db3")) return;
+//
+//            const string createTableQuery = @"CREATE TABLE IF NOT EXISTS [data] (
+//                                  [Name] VARCHAR(50),
+//                                  [Book] VARCHAR(1000),
+//                                  [Page] VARCHAR(1000),
+//                                  [Date] DATE
+//                                  )";
+//            System.Data.SQLite.SQLiteConnection.CreateFile("HomeworkDB.db3");
+//            using (var con = new System.Data.SQLite.SQLiteConnection("data source=HomeworkDB.db3"))
+//            {
+//                using (var com = new System.Data.SQLite.SQLiteCommand(con))
+//                {
+//                    con.Open();
+//
+//                    com.CommandText = createTableQuery;
+//                    com.ExecuteNonQuery();
+//
+//                    con.Close();
+//                }
+//            }
+//        }
 
         public ActionResult AddNewRecord(string name, string book, string page)
         {
-            using (var con = new System.Data.SQLite.SQLiteConnection("data source=HomeworkDB.db3"))
-            {
-                using (var com = new System.Data.SQLite.SQLiteCommand(con))
-                {
-                    con.Open();
+            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; Integrated Security=True";
 
-                    var dateTemp = DateTime.Now.ToString("s");
-                    var addRecordQuery = String.Format("INSERT INTO data (Name, Book, Page, Date) " +
-                                                          "values ('{0}','{1}', '{2}', '{3}')", name, book, page, dateTemp);
-                    com.CommandText = addRecordQuery;
-                    com.ExecuteNonQuery();
-                }
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var dateTemp = DateTime.Now.ToString("s");
+                var addRecordQuery = String.Format("INSERT INTO data (Name, Book, Page, Date) " +
+                                                        "values ('{0}','{1}', '{2}', '{3}')", name, book, page, dateTemp);
+                var command = new SqlCommand(addRecordQuery, connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
             }
 
             return RedirectToAction("Index");
@@ -64,23 +66,24 @@ namespace Homework.App.Controllers
         {
             var records = new List<Record>();
 
-            using (var con = new System.Data.SQLite.SQLiteConnection("data source=HomeworkDB.db3"))
-            {
-                using (var com = new System.Data.SQLite.SQLiteCommand(con))
-                {
-                    con.Open();
+            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; Integrated Security=True";
 
-                    com.CommandText = "Select * FROM data";
-                    using (var reader = com.ExecuteReader())
+            using (var connection = new SqlConnection(connectionString))
+            {
+                const string commandText = "SELECT * FROM data";
+                var command = new SqlCommand(commandText, connection);
+
+                connection.Open();
+                using (var dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            records.Add(new Record());
-                            records.Last().Name = (string) reader["Name"];
-                            records.Last().Book = (string) reader["Book"];
-                            records.Last().Page = (string) reader["Page"];
-                            records.Last().Date = (DateTime)reader["Date"];
-                        }
+                        records.Add(new Record());
+                        records.Last().Name = (string) dataReader["Name"];
+                        records.Last().Book = (string) dataReader["Book"];
+                        records.Last().Page = (string) dataReader["Page"];
+                        records.Last().Date = (DateTime)dataReader["Date"];
+
                     }
                 }
             }
