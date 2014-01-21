@@ -16,7 +16,7 @@ namespace Homework.App.Controllers
 
         public ActionResult AddNewRecord(string name, string book, string page)
         {
-            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; Integrated Security=True";
+            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; User ID=handb; Password=123456;Integrated Security=false";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -36,7 +36,7 @@ namespace Homework.App.Controllers
         {
             var records = new List<Record>();
 
-            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; Integrated Security=True";
+            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; User ID=handb; Password=123456;Integrated Security=false";
 
             using (var connection = new SqlConnection(connectionString))
             {
