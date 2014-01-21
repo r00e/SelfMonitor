@@ -1,2 +1,2 @@
 Set-ExecutionPolicy Unrestricted;
-iex "sqlcmd -S localhost -i .\create-db.sql"
+iex "sqlcmd -S localhost -i ..\sql\create-db.sql"

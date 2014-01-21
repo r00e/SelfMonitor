@@ -149,3 +149,6 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+deploy/package
+!deploy/sql
