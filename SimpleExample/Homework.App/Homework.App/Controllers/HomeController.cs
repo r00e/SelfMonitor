@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
@@ -16,7 +17,7 @@ namespace Homework.App.Controllers
 
         public ActionResult AddNewRecord(string name, string book, string page)
         {
-            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; User ID=handb; Password=123456;Integrated Security=false";
+            var connectionString = ConfigurationManager.ConnectionStrings["HanHomeworkConnectStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -35,8 +36,7 @@ namespace Homework.App.Controllers
         private List<Record> GetAllRecords()
         {
             var records = new List<Record>();
-
-            const string connectionString = "Data Source=(local); Initial Catalog=HanHomework; User ID=handb; Password=123456;Integrated Security=false";
+            var connectionString = ConfigurationManager.ConnectionStrings["HanHomeworkConnectStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connectionString))
             {
