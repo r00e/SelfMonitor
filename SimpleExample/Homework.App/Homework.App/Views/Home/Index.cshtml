@@ -22,43 +22,62 @@
                 border-collapse: collapse;
             }
 
-                table th {
-                    border-width: 1px;
-                    padding: 8px;
-                    border-style: solid;
-                    border-color: #666666;
-                    background-color: #D0D0D0;
-                }
+            table th {
+                border-width: 1px;
+                padding: 8px;
+                border-style: solid;
+                border-color: #666666;
+                background-color: #D0D0D0;
+            }
 
-                table td {
-                    border-width: 1px;
-                    padding: 8px;
-                    border-style: solid;
-                    border-color: #666666;
-                }
+            table td {
+                border-width: 1px;
+                padding: 8px;
+                border-style: solid;
+                border-color: #666666;
+            }
 
-                table tr {
-                    border: 0;
-                    border-top: 1px solid #CCC;
-                    background-color: white;
-                    margin: 0;
-                    padding: 0;
-                }
+            table tr {
+                border: 0;
+                border-top: 1px solid #CCC;
+                background-color: white;
+                margin: 0;
+                padding: 0;
+            }
 
-                    table tr:nth-child(2n+1) {
-                        background-color: #F0F0F0;
-                    }
+            table tr:nth-child(2n+1) {
+                background-color: #F0F0F0;
+            }
         </style>
         
-        <form method="POST" action="/home/AddNewRecord">
+        <form method="POST" id="addNewRecord" action="/home/AddNewRecord" onsubmit="return validateForm()">
             <label>Name</label>
-            <input name="name"/>
+            <input id="name" name="name"/>
             <label>Book</label>
-            <input name="book"/>
+            <input id="book" name="book"/>
             <label>Page</label>
-            <input name="page"/>
+            <input id="page" name="page"/>
             <button id="add-record">Add</button>
         </form>
+
+        <script type="text/javascript">
+            function validate(val, format, str) {
+                if (!format.test(val)) {
+                    alert(str);
+                    return false;
+                }
+
+                return true;
+            }
+
+            function validateForm() {
+                var nameFormat = validate(document.getElementById('name').value, /^(\w|\d)+$/, 'For Name value, only character and number are allowed...');
+                var bookFormat = validate(document.getElementById('book').value, /^(\w|\d)+$/, 'For Book value, only character and number are allowed...');
+                var pageFormat = validate(document.getElementById('page').value, /^\d+$/, 'For Page value, only number are allowed...');
+
+                return nameFormat && bookFormat && pageFormat;
+            }
+        </script>
 
         <div>
             <table>
