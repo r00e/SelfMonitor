@@ -21,14 +21,7 @@ Function CreateFolder($folder){
 }
 
 Function CopySrcFileTo($dest) {
-    $srcFile[$srcFile.keys] | `
-    %{ if((Get-Item $_).PSIsContainer){
-            cp -r $_ $dest
-        } 
-        else{
-            cp $_ $dest
-        }
-    }
+    $srcFile[$srcFile.keys] | % { cp -r $_ $dest }
 }
 
 Function CreatePackage {

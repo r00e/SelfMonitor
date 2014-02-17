@@ -8,9 +8,10 @@
     <!DOCTYPE html>
 
     <html>
-    <head>
-        <title>Index</title>
-    </head>
+        <head>
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+            <title>Index</title>
+        </head>
     <body>
         <style type="text/css">
             table {
@@ -71,9 +72,9 @@
             }
 
             function validateForm() {
-                var nameFormat = validate(document.getElementById('name').value, /^(\w|\d)+$/, 'For Name value, only character and number are allowed...');
-                var bookFormat = validate(document.getElementById('book').value, /^(\w|\d)+$/, 'For Book value, only character and number are allowed...');
-                var pageFormat = validate(document.getElementById('page').value, /^\d+$/, 'For Page value, only number are allowed...');
+                var nameFormat = validate($("#name").val(), /^(\w|\d)+$/, 'For Name value, only character and number are allowed...');
+                var bookFormat = validate($("#book").val(), /^(\w|\d)+$/, 'For Book value, only character and number are allowed...');
+                var pageFormat = validate($("#page").val(), /^\d+$/, 'For Page value, only number are allowed...');
 
                 return nameFormat && bookFormat && pageFormat;
             }
