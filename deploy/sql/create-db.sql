@@ -8,10 +8,11 @@ GO
 USE hanhomework 
 CREATE TABLE data 
   ( 
-     [name] VARCHAR(50), 
-     [book] VARCHAR(1000), 
-     [page] VARCHAR(1000), 
-     [date] DATE 
+    [Id] int PRIMARY KEY IDENTITY,
+    [name] VARCHAR(50), 
+    [book] VARCHAR(1000), 
+    [page] VARCHAR(1000), 
+    [date] DATE
   ) 
 GO 
 
