@@ -128,71 +128,21 @@
                     if (e.which == 13) {
                         var newContent = $(this).val();
 
-                        switch (originalClass) {
-                        case "name":
-                            if (!Validate(newContent, ruleForNameAndBook, warningMsgForName)) {
-                                $(this).parent().text(originalContent);
-                            } else {
-                                $.ajax( window.location.href + "/home/UpdateRecord", {
-                               
-                                    type: "POST",
-//                                    dataType: "json",
-                                    data: { id:id, name:newContent, type:"name" },
-                                    success: function () {
-//                                        alert("succeed");
-                                        me.text(newContent);
-                                        console.log("success");
-                                    },
-                                    error: function (d, s, e) {
-//                                        alert(s); alert(e);
-                                        //                                        alert("update error");
-                                        console.log("hello world!");
-                                    }
-                                });
-                            }
-                            break;
-                        case "book":
-                            if (!Validate(newContent, ruleForNameAndBook, warningMsgForBook)) {
-                                $(this).parent().text(originalContent);
-                            } else {
-                                $.ajax({
-                                    url: window.location.href + "/home/UpdateRecord2",
-                                    type: "POST",
-                                    data: { id: id, value: newContent, type: "book" },
-                                    success: function () {
-                                        me.text(newContent);
-                                        console.log("success");
-                                    },
-                                    error: function () {
-                                        console.log("update error");
-                                    }
-                                });
-                            }
-                            break;
-                        case "page":
-                            if (!Validate(newContent, ruleForPage, warningMsgForPage)) {
-                                $(this).parent().text(originalContent);
-                            } else {
-                                $.ajax({
-                                    url: window.location.href + "/home/UpdateRecord",
-                                    type: "POST",
-                                    dataType: "json",
-                                    data: { id: id, page: newContent, type: "page" },
-                                    success: function () {
-//                                        alert("succeed");
-                                        $(this).parent().text(newContent);
-
-                                    },
-                                    error: function () {
-                                        alert("update error");
-                                    }
-                                });
-                            }
-                            break;
-                        default:
+                        if (!Validate(newContent, ruleForNameAndBook, warningMsgForBook)) {
+                            $(this).parent().text(originalContent);
+                        } else {
+                            $.ajax({
+                                url: window.location.href + "/home/UpdateRecord",
+                                type: "POST",
+                                data: { id: id, value: newContent, type: originalClass },
+                                success: function () {
+                                    me.text(newContent);
+                                },
+                                error: function () {
+                                    console.log("update error");
+                                }
+                            });
                         }
-
-                        
                     }
                 });
                 $(this).children().first().blur(function () {
@@ -222,7 +172,7 @@
             }
 
 
-            $("td").bind("dblclick", Edit);
+            $("td#info").bind("dblclick", Edit);
             $("td #delete").bind("click", Delete);
         </script>
     </body>

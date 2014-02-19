@@ -34,37 +34,7 @@ namespace Homework.App.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public void UpdateRecord(Record record, string type)
-        {
-            string value = null;
-            switch (type)
-            {
-                case "name":
-                    value = record.Name;
-                    break;
-                case "book":
-                    value = record.Book;
-                    break;
-                case "page":
-                    value = record.Page;
-                    break;
-            }
-
-            var connectionString = ConfigurationManager.ConnectionStrings["HanHomeworkConnectStr"].ConnectionString;
-
-            using (var connection = new SqlConnection(connectionString))
-            {
-                var deleteRecord = String.Format("UPDATE [hanhomework].[dbo].[data] SET {0} = '{1}' WHERE Id = {2} ", type, value, record.Id);
-
-                var command = new SqlCommand(deleteRecord, connection);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public void UpdateRecord2(int id, string value, string type)
+        public void UpdateRecord(int id, string value, string type)
         {
 
 
