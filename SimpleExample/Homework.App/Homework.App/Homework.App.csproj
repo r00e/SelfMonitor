@@ -76,7 +76,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CSS\style.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\homework.js" />
     <Content Include="Scripts\jquery-1.11.0.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Web.config" />

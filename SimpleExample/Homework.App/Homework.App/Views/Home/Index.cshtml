@@ -10,170 +10,40 @@
     <html>
         <head>
             <script type="text/javascript" src="../../Scripts/jquery-1.11.0.js"></script>
+            <script type="text/javascript" src="../../Scripts/homework.js"></script>
+            <link rel="stylesheet" type="text/css" href="../../CSS/style.css">
             <title>Index</title>
         </head>
-    <body>
-        <style type="text/css">
-            table {
-                font-family: verdana,arial,sans-serif;
-                font-size: 11px;
-                color: #333333;
-                border-width: 1px;
-                border-color: #666666;
-                border-collapse: collapse;
-            }
-
-            table th {
-                border-width: 1px;
-                padding: 8px;
-                border-style: solid;
-                border-color: #666666;
-                background-color: #D0D0D0;
-            }
-
-            table td {
-                border-width: 1px;
-                padding: 8px;
-                border-style: solid;
-                border-color: #666666;
-            }
-
-            table tr {
-                border: 0;
-                border-top: 1px solid #CCC;
-                background-color: white;
-                margin: 0;
-                padding: 0;
-            }
-
-            table tr:nth-child(2n+1) {
-                background-color: #F0F0F0;
-            }
-
-            table #delete {
-                text-decoration: underline;
-                color: rgb(0, 0, 255);
-                cursor: pointer;
-            }
-        </style>
-        
-        <form method="POST" id="addNewRecord" action="/home/AddNewRecord" onsubmit="return ValidateForm()">
-            <label>Name</label>
-            <input id="name" name="name"/>
-            <label>Book</label>
-            <input id="book" name="book"/>
-            <label>Page</label>
-            <input id="page" name="page"/>
-            <button id="add-record">Add</button>
-        </form>
-
-        <script type="text/javascript">
-            var ruleForNameAndBook = /^(\w|\d)+$/;
-            var ruleForPage = /^\d+$/;
-
-            var warningMsgForName = "For Name value, only character and number are allowed...";
-            var warningMsgForBook = "For Book value, only character and number are allowed...";
-            var warningMsgForPage = "For Page value, only number are allowed...";
-
-            function Validate(val, format, str) {
-                if (!format.test(val)) {
-                    alert(str);
-                    return false;
-                }
-
-                return true;
-            }
-
-            function ValidateForm() {
-                var nameFormat = Validate($("#name").val(), ruleForNameAndBook, warningMsgForName);
-                var bookFormat = Validate($("#book").val(), ruleForNameAndBook, warningMsgForBook);
-                var pageFormat = Validate($("#page").val(), ruleForPage, warningMsgForPage);
-
-                return nameFormat && bookFormat && pageFormat;
-            }
-        </script>
-
-        <div>
-            <table>
-                <tr>
-                    <th>@Html.LabelFor(model => model.FirstOrDefault().Name)</th>
-                    <th>@Html.LabelFor(model => model.FirstOrDefault().Book)</th>
-                    <th>@Html.LabelFor(model => model.FirstOrDefault().Page)</th>
-                    <th>@Html.LabelFor(model => model.FirstOrDefault().Date)</th>
-                    <th></th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
-                    <tr id=@item.Id>
-                        <td id="info" class="name">@item.Name</td>
-                        <td id="info" class="book">@item.Book</td>
-                        <td id="info" class="page">@item.Page</td>
-                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
-                        <td><label id="delete">Delete</label></td>
+        <body>
+            <form method="POST" id="addNewRecord" action="/home/AddNewRecord" onsubmit="return ValidateForm()">
+                <label>Name</label>
+                <input id="name" name="name"/>
+                <label>Book</label>
+                <input id="book" name="book"/>
+                <label>Page</label>
+                <input id="page" name="page"/>
+                <button id="add-record">Add</button>
+            </form>
+            
+                <table>
+                    <tr>
+                        <th>@Html.LabelFor(model => model.FirstOrDefault().Name)</th>
+                        <th>@Html.LabelFor(model => model.FirstOrDefault().Book)</th>
+                        <th>@Html.LabelFor(model => model.FirstOrDefault().Page)</th>
+                        <th>@Html.LabelFor(model => model.FirstOrDefault().Date)</th>
+                        <th></th>
                     </tr>
-                }
-            </table>
-        </div>
-        <script type="text/javascript">
-            function Edit() {
-                var me = $(this);
-                var originalContent = $(this).text();
-                var originalClass = $(this).attr("class");
-                var id = $(this).parent().attr("id");
 
-                $(this).html("<input type='text' value='" + originalContent + "' />");
-                $(this).children().first().focus();
-                $(this).children().first().keypress(function (e) {
-                    if (e.which == 13) {
-                        var newContent = $(this).val();
-
-                        if (!Validate(newContent, ruleForNameAndBook, warningMsgForBook)) {
-                            $(this).parent().text(originalContent);
-                        } else {
-                            $.ajax({
-                                url: window.location.href + "/home/UpdateRecord",
-                                type: "POST",
-                                data: { id: id, value: newContent, type: originalClass },
-                                success: function () {
-                                    me.text(newContent);
-                                },
-                                error: function () {
-                                    console.log("update error");
-                                }
-                            });
-                        }
+                    @foreach (var item in Model)
+                    {
+                        <tr id=@item.Id>
+                            <td id="info" class="name">@item.Name</td>
+                            <td id="info" class="book">@item.Book</td>
+                            <td id="info" class="page">@item.Page</td>
+                            <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                            <td><label id="delete">Delete</label></td>
+                        </tr>
                     }
-                });
-                $(this).children().first().blur(function () {
-                    $(this).parent().text(originalContent);
-                });
-            }
-
-            function Delete() {
-                var deleteRow = $(this).parent().parent();
-
-                var idOnPage = $(this).parent().parent().attr("id");
-
-                $.ajax({
-                    url: window.location.href + "/home/DeleteRecord",
-                    type: "POST",
-                    dataType: "json",
-                    data: {id:idOnPage},
-                    success: function (result) {
-//                        alert(result);
-                    },
-                    error: function() {
-                        alert("delete error");
-                    }
-                });
-
-                $(deleteRow).remove();
-            }
-
-
-            $("td#info").bind("dblclick", Edit);
-            $("td #delete").bind("click", Delete);
-        </script>
-    </body>
+                </table>
+        </body>
 </html>
