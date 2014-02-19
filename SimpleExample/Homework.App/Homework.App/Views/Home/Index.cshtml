@@ -156,16 +156,15 @@
                                 $(this).parent().text(originalContent);
                             } else {
                                 $.ajax({
-                                    url: window.location.href + "/home/UpdateRecord",
+                                    url: window.location.href + "/home/UpdateRecord2",
                                     type: "POST",
-                                    dataType: "json",
-                                    data: { id: id, book: newContent, type: "book" },
+                                    data: { id: id, value: newContent, type: "book" },
                                     success: function () {
-//                                        alert("succeed");
-                                        $(this).parent().text(newContent);
+                                        me.text(newContent);
+                                        console.log("success");
                                     },
                                     error: function () {
-                                        alert("update error");
+                                        console.log("update error");
                                     }
                                 });
                             }

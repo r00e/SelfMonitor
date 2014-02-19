@@ -64,9 +64,21 @@ namespace Homework.App.Controllers
             }
         }
 
-        public void UpdateRecord2()
+        public void UpdateRecord2(int id, string value, string type)
         {
-            
+
+
+            var connectionString = ConfigurationManager.ConnectionStrings["HanHomeworkConnectStr"].ConnectionString;
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var deleteRecord = String.Format("UPDATE [hanhomework].[dbo].[data] SET {0} = '{1}' WHERE Id = {2} ", type, value, id);
+
+                var command = new SqlCommand(deleteRecord, connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }            
         }
         
         [HttpPost]
