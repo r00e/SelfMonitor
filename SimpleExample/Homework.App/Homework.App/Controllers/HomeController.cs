@@ -35,7 +35,7 @@ namespace Homework.App.Controllers
         }
 
         [HttpPost]
-        public Record UpdateRecord(Record record, string type)
+        public void UpdateRecord(Record record, string type)
         {
             string value = null;
             switch (type)
@@ -62,8 +62,11 @@ namespace Homework.App.Controllers
                 connection.Open();
                 command.ExecuteNonQuery();
             }
+        }
 
-            return record;
+        public void UpdateRecord2()
+        {
+            
         }
         
         [HttpPost]

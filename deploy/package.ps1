@@ -2,6 +2,7 @@ $packagePath = ".\package"
 
 $srcFile = @{
     "binFolder" = "..\SimpleExample\Homework.App\Homework.App\bin";
+    "scriptsFolder" = "..\SimpleExample\Homework.App\Homework.App\Scripts";
     "viewsFolder" = "..\SimpleExample\Homework.App\Homework.App\Views";
     "packagesConfig" = "..\SimpleExample\Homework.App\Homework.App\packages.config";
     "globalAsax" = "..\SimpleExample\Homework.App\Homework.App\Global.asax";
