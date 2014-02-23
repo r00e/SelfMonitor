@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using Homework.App.Models;
 
@@ -23,7 +22,7 @@ namespace Homework.App.Controllers
             using (var connection = new SqlConnection(connectionString))
             {
                 var dateTemp = DateTime.Now.ToString("s");
-                var addRecordQuery = String.Format("INSERT INTO data (Name, Book, Page, Date) " +
+                var addRecordQuery = String.Format("INSERT INTO record (Name, Book, Page, Date) " +
                                                         "values ('{0}','{1}', '{2}', '{3}')", name, book, page, dateTemp);
                 var command = new SqlCommand(addRecordQuery, connection);
 
@@ -42,7 +41,7 @@ namespace Homework.App.Controllers
 
             using (var connection = new SqlConnection(connectionString))
             {
-                var deleteRecord = String.Format("UPDATE [hanhomework].[dbo].[data] SET {0} = '{1}' WHERE Id = {2} ", type, value, id);
+                var deleteRecord = String.Format("UPDATE [hanhomework].[dbo].[record] SET {0} = '{1}' WHERE Id = {2} ", type, value, id);
 
                 var command = new SqlCommand(deleteRecord, connection);
 
@@ -58,7 +57,7 @@ namespace Homework.App.Controllers
 
             using (var connection = new SqlConnection(connectionString))
             {
-                var deleteRecord = String.Format("DELETE FROM data WHERE Id = {0} ", record.Id);
+                var deleteRecord = String.Format("DELETE FROM record WHERE Id = {0} ", record.Id);
 
                 var command = new SqlCommand(deleteRecord, connection);
 
@@ -77,7 +76,7 @@ namespace Homework.App.Controllers
 
             using (var connection = new SqlConnection(connectionString))
             {
-                const string commandText = "SELECT * FROM data";
+                const string commandText = "SELECT * FROM record";
                 var command = new SqlCommand(commandText, connection);
 
                 connection.Open();

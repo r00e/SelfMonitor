@@ -6,13 +6,22 @@ CREATE DATABASE hanhomework
 GO 
 
 USE hanhomework 
-CREATE TABLE data 
+CREATE TABLE record 
   ( 
     [Id] int PRIMARY KEY IDENTITY,
     [name] VARCHAR(50), 
     [book] VARCHAR(1000), 
     [page] VARCHAR(1000), 
     [date] DATE
+  ) 
+GO
+
+USE hanhomework 
+CREATE TABLE book 
+  ( 
+    [Id] int PRIMARY KEY IDENTITY,
+    [bookName] VARCHAR(50), 
+    [pageCount] VARCHAR(1000)
   ) 
 GO 
 

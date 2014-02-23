@@ -1,0 +1,44 @@
+﻿@using System.Web.Mvc.Html
+@inherits System.Web.Mvc.WebViewPage<IEnumerable<Homework.App.Models.Book>>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../CSS/style.css">
+        <title>Book Manager</title>
+    </head>
+
+    <body>
+        <a href="../Home/Index">Record Page</a>
+
+        <form method="POST" id="addNewBook" action="/BookManager/AddNewBook">
+            <label>Book Name</label>
+            <input id="bookName" name="bookName" />
+            <label>Page Count</label>
+            <input id="pageCount" name="pageCount" />
+            <button id="add-book">Add</button>
+        </form>        
+        
+
+        <table>
+            <tr>
+                <th>@Html.LabelFor(model => model.FirstOrDefault().BookName)</th>
+                <th>@Html.LabelFor(model => model.FirstOrDefault().PageCount)</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr id=@item.Id>
+                    <td id="info" class="bookName">@item.BookName</td>
+                    <td id="info" class="pageCount">@item.PageCount</td>
+                </tr>
+            }
+        </table>
+
+    </body>
+</html>

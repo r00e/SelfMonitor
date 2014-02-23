@@ -13,6 +13,11 @@ namespace Homework.App
                 "Default",
                 "{controller}/{action}/{id}",
                 new {Controller = "Home", Action = "Index", Id = UrlParameter.Optional});
+
+            RouteTable.Routes.MapRoute(
+                "BookManager",
+                "{controller}/{action}/{id}",
+                new {Controller = "BookManager", Action = "Index", Id = UrlParameter.Optional});
         }
     }
 }
