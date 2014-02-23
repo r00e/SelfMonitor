@@ -5,19 +5,36 @@ var warningMsgForName = "For Name value, only character and number are allowed..
 var warningMsgForBook = "For Book value, only character and number are allowed...";
 var warningMsgForPage = "For Page value, only number are allowed...";
 
-function Validate(val, format, str) {
-    if (!format.test(val)) {
-        alert(str);
-        return false;
+function ValidateNew(val, type) {
+    switch (type) {
+        case "name":
+            if (!ruleForNameAndBook.test(val)) {
+                alert(warningMsgForName);
+                return false;
+            } else {
+                return true;
+            }
+        case "book":
+            if (!ruleForNameAndBook.test(val)) {
+                alert(warningMsgForBook);
+                return false;
+            } else {
+                return true;
+            }
+        case "page":
+            if (!ruleForPage.test(val)) {
+                alert(warningMsgForPage);
+                return false;
+            } else {
+                return true;
+            }
     }
-
-    return true;
 }
 
 function ValidateForm() {
-    var nameFormat = Validate($("#name").val(), ruleForNameAndBook, warningMsgForName);
-    var bookFormat = Validate($("#book").val(), ruleForNameAndBook, warningMsgForBook);
-    var pageFormat = Validate($("#page").val(), ruleForPage, warningMsgForPage);
+    var nameFormat = ValidateNew($("#name").val(), "name");
+    var bookFormat = ValidateNew($("#book").val(), "book");
+    var pageFormat = ValidateNew($("#page").val(), "page");
 
     return nameFormat && bookFormat && pageFormat;
 }
@@ -34,7 +51,7 @@ function Edit() {
         if (e.which == 13) {
             var newContent = $(this).val();
 
-            if (!Validate(newContent, ruleForNameAndBook, warningMsgForBook)) {
+            if (!ValidateNew(newContent, originalClass)) {
                 $(this).parent().text(originalContent);
             } else {
                 $.ajax({
